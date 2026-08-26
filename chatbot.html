@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reflex AI</title>
+
+    <link rel="stylesheet" href="cb.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+            <span>Reflex AI</span>
+        </div>
+
+        <button class="new-chat" id="new-chat-button">
+            <span>＋</span> New Chat
+        </button>
+
+        <div class="sidebar-info">
+            <p>Simple Reflex Agent</p>
+            <span>No memory • No database</span>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Chat Area -->
+    <main class="main-container">
+
+        <!-- Top Header -->
+        <header class="top-bar">
+            <div>
+                <h2>Reflex Assistant</h2>
+                <p>Simple Reflex Agent</p>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                Online
+            </div>
+        </header>
+
+
+        <!-- Chat Messages -->
+        <section class="chat-area" id="chat-box">
+
+            <div class="welcome-screen" id="welcome-screen">
+
+                <div class="welcome-icon">✦</div>
+
+                <h1>Hello, I'm Reflex AI.</h1>
+
+                <p>
+                    A simple chatbot that responds using
+                    condition-action rules.
+                </p>
+
+                <div class="suggestion-container">
+
+                    <button class="suggestion">
+                        Hello
+                    </button>
+
+                    <button class="suggestion">
+                        How are you?
+                    </button>
+
+                    <button class="suggestion">
+                        What is your name?
+                    </button>
+
+                    <button class="suggestion">
+                        Tell me a joke
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Input Area -->
+        <div class="input-section">
+
+            <div class="input-container">
+
+                <input
+                    type="text"
+                    id="user-input"
+                    placeholder="Message Reflex AI..."
+                    autocomplete="off"
+                >
+
+                <button id="send-button" aria-label="Send message">
+                    ↑
+                </button>
+
+            </div>
+
+            <p class="disclaimer">
+                Reflex AI uses simple condition-action rules and may not understand every message.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <script src="cbj.js"></script>
+
+</body>
+</html>
