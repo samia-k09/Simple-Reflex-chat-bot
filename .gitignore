@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+
+Backend/chatbot.db
+
+.env
+.venv/
+venv/

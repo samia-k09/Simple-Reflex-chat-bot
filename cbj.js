@@ -5,55 +5,6 @@ const welcomeScreen = document.getElementById("welcome-screen");
 const newChatButton = document.getElementById("new-chat-button");
 
 
-// ================= SIMPLE REFLEX AGENT =================
-
-function getBotResponse(message) {
-
-    const input = message.toLowerCase().trim();
-
-    // Condition → Action rules
-
-    if (input.includes("hello") || input.includes("hi")) {
-        return "Hello! How can I help you today?";
-    }
-
-    else if (input.includes("how are you")) {
-        return "I am doing well! Thank you for asking.";
-    }
-
-    else if (
-        input.includes("your name") ||
-        input.includes("who are you")
-    ) {
-        return "I am Reflex AI, a chatbot based on a Simple Reflex Agent.";
-    }
-
-    else if (input.includes("joke")) {
-        return "Why do programmers prefer dark mode? Because light attracts bugs!";
-    }
-
-    else if (input.includes("simple reflex agent")) {
-        return "A Simple Reflex Agent responds to the current input using predefined condition-action rules. It does not use memory.";
-    }
-
-    else if (input.includes("what can you do")) {
-        return "I can respond to simple questions using predefined condition-action rules.";
-    }
-
-    else if (input.includes("thank")) {
-        return "You're welcome! Happy to help.";
-    }
-
-    else if (input.includes("bye")) {
-        return "Goodbye! Have a great day!";
-    }
-
-    else {
-        return "I'm a Simple Reflex Agent, so I only respond to predefined conditions. Try asking me something like 'Hello', 'How are you?', or 'Tell me a joke'.";
-    }
-}
-
-
 // ================= DISPLAY MESSAGE =================
 
 function addMessage(message, sender) {
@@ -80,8 +31,7 @@ function addMessage(message, sender) {
 
     if (sender === "user") {
         icon.textContent = "U";
-    }
-    else {
+    } else {
         icon.textContent = "✦";
     }
 
@@ -102,9 +52,13 @@ function addMessage(message, sender) {
 }
 
 
-// ================= SEND MESSAGE =================
+// ================= SEND MESSAGE TO GEMINI =================
 
-function sendMessage() {
+async function sendMessage(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
 
     const message = userInput.value.trim();
 
@@ -123,20 +77,50 @@ function sendMessage() {
     addMessage(message, "user");
 
 
-    // Get response from Simple Reflex Agent
-    const response = getBotResponse(message);
-
-
-    // Simulate small thinking delay
-    setTimeout(function () {
-
-        addMessage(response, "bot");
-
-    }, 500);
-
-
-    // Clear input
+    // Clear input immediately
     userInput.value = "";
+
+
+    try {
+
+        // Send message to Flask backend
+        const response = await fetch("http://127.0.0.1:5000/chat", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message: message
+            })
+
+        });
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+            throw new Error(data.error || "Server error");
+        }
+
+
+        // Display Gemini response
+        addMessage(data.response, "bot");
+
+
+    } catch (error) {
+
+        console.error("Error:", error);
+
+        addMessage(
+            "Sorry, I couldn't connect to the AI server. Please make sure the Flask backend is running.",
+            "bot"
+        );
+
+    }
 }
 
 
@@ -148,7 +132,7 @@ sendButton.addEventListener("click", sendMessage);
 userInput.addEventListener("keydown", function (event) {
 
     if (event.key === "Enter") {
-        sendMessage();
+        sendMessage(event);
     }
 
 });
@@ -177,19 +161,6 @@ suggestions.forEach(function (button) {
 
 newChatButton.addEventListener("click", function () {
 
-    chatBox.innerHTML = `
-        <div class="welcome-screen">
-
-            <div class="welcome-icon">✦</div>
-
-            <h1>Hello, I'm Reflex AI.</h1>
-
-            <p>
-                A simple chatbot that responds using
-                condition-action rules.
-            </p>
-
-        </div>
-    `;
+    location.reload();
 
 });
