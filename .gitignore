@@ -1,8 +1,7 @@
 __pycache__/
 *.pyc
 
-Backend/chatbot.db
-
+chatbot.db
 .env
 .venv/
 venv/

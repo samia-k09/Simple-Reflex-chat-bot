@@ -84,7 +84,7 @@ async function sendMessage(event) {
     try {
 
         // Send message to Flask backend
-        const response = await fetch("http://127.0.0.1:5000/chat", {
+        const response = await fetch("/chat", {
 
             method: "POST",
 

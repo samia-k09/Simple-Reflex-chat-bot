@@ -8,10 +8,7 @@ from database import get_recent_conversations
 
 # ================= NLTK SETUP =================
 
-try:
-    nltk.data.find("tokenizers/punkt_tab")
-except LookupError:
-    nltk.download("punkt_tab")
+
 
 
 def preprocess(message):
@@ -22,7 +19,7 @@ def preprocess(message):
 
     message = message.lower().strip()
 
-    tokens = word_tokenize(message)
+    tokens = word_tokenize(message, preserve_line=True)
 
     return tokens
 
